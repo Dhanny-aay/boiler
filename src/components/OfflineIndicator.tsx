@@ -20,13 +20,11 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
         setShow(false);
       }, 8000);
 
-      return () => {
-        clearTimeout(timer);
-      };
+      return () => clearTimeout(timer);
     } else {
       setShow(false);
     }
-  }, [isOffline]);
+  }, [isOffline]); // eslint-disable-line consistent-return
 
   const handleDismiss = (): void => {
     setShow(false);
