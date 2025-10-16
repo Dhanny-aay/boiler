@@ -1,42 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import { WifiOff, AlertTriangle, X } from 'lucide-react'
-import { useServiceWorker } from '@/hooks/useServiceWorker'
+import React, { useEffect, useState } from "react";
+import { WifiOff, AlertTriangle, X } from "lucide-react";
+import { useServiceWorker } from "@/hooks/useServiceWorker";
 
 interface OfflineIndicatorProps {
-  className?: string
+  className?: string;
 }
 
-export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({ className = '' }) => {
-  const { isOffline } = useServiceWorker()
-  const [show, setShow] = useState<boolean>(false)
+export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
+  className = "",
+}) => {
+  const { isOffline } = useServiceWorker();
+  const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
     if (isOffline) {
-      setShow(true)
+      setShow(true);
       // Hide after 8 seconds
       const timer = setTimeout(() => {
-        setShow(false)
-      }, 8000)
-      
-      return () => clearTimeout(timer)
+        setShow(false);
+      }, 8000);
+
+      return () => {
+        clearTimeout(timer);
+      };
     } else {
-      setShow(false)
+      setShow(false);
     }
-  }, [isOffline])
+  }, [isOffline]);
 
   const handleDismiss = (): void => {
-    setShow(false)
-  }
+    setShow(false);
+  };
 
-  if (!isOffline || !show) return null
+  if (!isOffline || !show) return null;
 
   return (
     <>
       {/* Top banner indicator */}
-      <div className={`offline-indicator ${show ? 'show' : ''} ${className}`}>
+      <div className={`offline-indicator ${show ? "show" : ""} ${className}`}>
         <div className="flex items-center justify-center space-x-2">
           <WifiOff className="w-5 h-5" />
-          <span className="font-medium">You're offline. Some features may be limited.</span>
+          <span className="font-medium">
+            You're offline. Some features may be limited.
+          </span>
         </div>
       </div>
 
@@ -48,7 +54,9 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({ className = 
               <AlertTriangle className="w-5 h-5 text-yellow-600" />
             </div>
             <div className="flex-1">
-              <h4 className="text-sm font-extrabold text-yellow-800">Offline Mode</h4>
+              <h4 className="text-sm font-extrabold text-yellow-800">
+                Offline Mode
+              </h4>
               <p className="text-sm font-medium text-yellow-700 mt-1">
                 You're currently offline. Data may be limited to cached content.
               </p>
@@ -63,5 +71,5 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({ className = 
         </div>
       </div>
     </>
-  )
-}
+  );
+};
